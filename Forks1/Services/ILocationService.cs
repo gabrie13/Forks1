@@ -11,5 +11,10 @@ namespace Forks1.Services
     interface ILocationService
     {
         List<LocationViewModel> GetAll();
+        LocationViewModel FindById(int id);
+        LocationViewModel Create(LocationViewModel location);
+        LocationViewModel Save(LocationViewModel location);
+        void Delete(int id);
+        void Dispose();
     }
 }
