@@ -43,6 +43,9 @@ namespace Forks1.Services
         {
             var loc = fromLoc(location);
             db.Locations.Add(loc);
+            db.SaveChanges();
+
+            location.LocationId = loc.LocationId;
             return LocDto(loc);
         }
 

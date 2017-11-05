@@ -20,6 +20,8 @@ namespace Forks1.Models
         }
 
         public System.Data.Entity.DbSet<Forks1.Models.Location> Locations { get; set; }
+
+        public System.Data.Entity.DbSet<Forks1.Models.Position> Positions { get; set; }
     
     }
 }

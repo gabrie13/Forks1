@@ -7,105 +7,106 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Forks1.Models;
+using System.Data.Entity;
 using Forks1.Services;
 
-namespace Forks1.Models
+namespace Forks1.Controllers
 {
-    public class LocationController : Controller
+    public class PositionController : Controller
     {
         private Forks1DB db = new Forks1DB();
-        private readonly ILocationService _locationService = new LocationService();
+        private readonly IPositionService _positionService = new PositionService();
 
-        // GET: Location
+        // GET: Position
         public ActionResult Index()
         {
-            return View(_locationService.GetAll());
+            return View(_positionService.GetAll());
         }
 
-        // GET: Location/Details/5
+        // GET: Position/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LocationViewModel location = _locationService.FindById(id.Value);
-            if (location == null)
+            PositionViewModel position = _positionService.FindById(id.Value);
+            if (position == null)
             {
                 return HttpNotFound();
             }
-            return View(location);
+            return View(position);
         }
 
-        // GET: Location/Create
+        // GET: Position/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Location/Create
+        // POST: Position/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LocationId,LocationName,Phone,Email,Address,City,State,ZipCode")] LocationViewModel location)
+        public ActionResult Create([Bind(Include = "PositionId,PositionName")] PositionViewModel position)
         {
             if (ModelState.IsValid)
             {
-                _locationService.Create(location);
+                _positionService.Create(position);
                 return RedirectToAction("Index");
             }
 
-            return View(location);
+            return View(position);
         }
 
-        // GET: Location/Edit/5
+        // GET: Position/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LocationViewModel location = _locationService.FindById(id.Value);
-            if (location == null)
+            PositionViewModel position = _positionService.FindById(id.Value);
+            if (position == null)
             {
                 return HttpNotFound();
             }
-            return View(location);
+            return View(position);
         }
 
-        // POST: Location/Edit/5
+        // POST: Position/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LocationId,LocationName,Phone,Email,Address,City,State,ZipCode")] LocationViewModel location)
+        public ActionResult Edit([Bind(Include = "PositionId,PositionName")] PositionViewModel position)
         {
             if (ModelState.IsValid)
             {
-                _locationService.Save(location);
+                _positionService.Save(position);
                 return RedirectToAction("Index");
             }
-            return View(location);
+            return View(position);
         }
 
-        // GET: Location/Delete/5
+        // GET: Position/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LocationViewModel location = _locationService.FindById(id.Value);
-            if (location == null)
+            PositionViewModel position = _positionService.FindById(id.Value);
+            if (position == null)
             {
                 return HttpNotFound();
             }
-            return View(location);
+            return View(position);
         }
 
-        // POST: Location/Delete/5
+        // POST: Position/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _locationService.Delete(id);
+            _positionService.Delete(id);
             return RedirectToAction("Index");
         }
 
@@ -113,7 +114,7 @@ namespace Forks1.Models
         {
             if (disposing)
             {
-                _locationService.Dispose();
+                _positionService.Dispose();
             }
             base.Dispose(disposing);
         }
