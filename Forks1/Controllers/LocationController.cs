@@ -29,7 +29,7 @@ namespace Forks1.Models
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Location location = db.Locations.Find(id);
+            LocationViewModel location = _locationService.FindById(id.Value);
             if (location == null)
             {
                 return HttpNotFound();
@@ -44,16 +44,13 @@ namespace Forks1.Models
         }
 
         // POST: Location/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LocationId,LocationName,Phone,Email,Address,City,State,ZipCode")] Location location)
+        public ActionResult Create([Bind(Include = "LocationId,LocationName,Phone,Email,Address,City,State,ZipCode")] LocationViewModel location)
         {
             if (ModelState.IsValid)
             {
-                db.Locations.Add(location);
-                db.SaveChanges();
+                _locationService.Create(location);
                 return RedirectToAction("Index");
             }
 
@@ -76,16 +73,13 @@ namespace Forks1.Models
         }
 
         // POST: Location/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LocationId,LocationName,Phone,Email,Address,City,State,ZipCode")] Location location)
+        public ActionResult Edit([Bind(Include = "LocationId,LocationName,Phone,Email,Address,City,State,ZipCode")] LocationViewModel location)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(location).State = EntityState.Modified;
-                db.SaveChanges();
+                _locationService.Save(location);
                 return RedirectToAction("Index");
             }
             return View(location);
@@ -98,7 +92,7 @@ namespace Forks1.Models
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Location location = db.Locations.Find(id);
+            LocationViewModel location = _locationService.FindById(id.Value);
             if (location == null)
             {
                 return HttpNotFound();
@@ -111,9 +105,7 @@ namespace Forks1.Models
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Location location = db.Locations.Find(id);
-            db.Locations.Remove(location);
-            db.SaveChanges();
+            _locationService.Delete(id);
             return RedirectToAction("Index");
         }
 
@@ -121,7 +113,7 @@ namespace Forks1.Models
         {
             if (disposing)
             {
-                db.Dispose();
+                _locationService.Dispose();
             }
             base.Dispose(disposing);
         }
