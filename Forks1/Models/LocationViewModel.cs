@@ -26,6 +26,7 @@ namespace Forks1.Models
 
         public string State { get; set; }
 
+        [Display(Name = "Zip Code")]
         [DataType(DataType.PostalCode)]
         public string ZipCode { get; set; }
     }
